@@ -2,9 +2,13 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: rest
-          uri: http://localhost:8015/test
+        - id: stores
+          uri: lb://stores
           predicates:
-            - Path=/rest/info
+            - Path=/stores/**
+        - id: rest
+          uri: lb://rest
+          predicates:
+            - Path=/**
 server:
   port: 8800

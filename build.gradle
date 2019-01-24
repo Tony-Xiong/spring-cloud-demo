@@ -13,7 +13,7 @@ buildscript {
     }
 }
 
-subprojects {
+subprojects { subProject ->
     apply plugin: 'idea'
     apply plugin: 'java'
     apply plugin: 'kotlin'
@@ -34,13 +34,17 @@ subprojects {
     sourceCompatibility = '1.8'
     
     dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
         implementation "org.jetbrains.kotlin:kotlin-reflect"
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
-
+    if(!subProject.name.contains("gateway")){
+        dependencies {
+            implementation 'org.springframework.boot:spring-boot-starter-web'
+        }
+    }
+    
     compileKotlin {
         kotlinOptions {
             freeCompilerArgs = ['-Xjsr305=strict']
